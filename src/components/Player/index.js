@@ -32,6 +32,22 @@ const Player = ({ setSongs, setCurrentSong, songs, currentSong, isPlaying, setIs
         )
     }
 
+    const dragHandler = (e) => {
+        audioRef.current.currentTime = e.target.value;
+        setSongInfo({...songInfo, currentTime: e.target.value})
+    }
+
+    const skipTrackHandler = (direction) => {
+        let currentIndex = songs.findIndex(song => song.id === currentSong.id)
+        if(direction === 'forward') {
+            setCurrentSong(songs[(currentIndex + 1) % songs.length]);
+        } else if(direction === 'back' && currentIndex > 0) {
+            setCurrentSong(songs[currentIndex - 1]);
+        } else if(direction === 'back' && currentIndex === 0) {
+            setCurrentSong(songs[songs.length - 1])
+        }
+    }
+
     return (
         <div className='player'>
             <div className="time-control">
@@ -41,6 +57,7 @@ const Player = ({ setSongs, setCurrentSong, songs, currentSong, isPlaying, setIs
                         min='0'
                         max={songInfo.duration || 0}
                         value={songInfo.currentTime}
+                        onChange={dragHandler}
                         type="range"
                     />
                 </div>
