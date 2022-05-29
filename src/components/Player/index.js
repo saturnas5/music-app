@@ -35,11 +35,8 @@ const Player = ({ setSongs, setCurrentSong, songs, currentSong, isPlaying, setIs
                 <FontAwesomeIcon className='skip-forward' size='2x' icon={faAngleRight}/>
             </div>
             <audio
-                onTimeUpdate={timeUpdateHandler}
-                onLoadedMetadata={timeUpdateHandler}
                 ref={audioRef}
                 src={currentSong.audio}
-                onEnded={songEndHandler}
             ></audio>
         </div>
     )
