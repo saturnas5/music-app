@@ -66,6 +66,13 @@ const Player = ({ setSongs, setCurrentSong, songs, currentSong, isPlaying, setIs
         }
     }
 
+    const songEndHandler = () => {
+        let currentIndex = songs.findIndex(song => song.id === currentSong.id)
+        setTimeout(() => {
+            setCurrentSong(songs[(currentIndex + 1) % songs.length]);
+        }, 2000)
+    }
+
 
     return (
         <div className='player'>
@@ -92,6 +99,7 @@ const Player = ({ setSongs, setCurrentSong, songs, currentSong, isPlaying, setIs
                 onLoadedMetadata={timeUpdateHandler}
                 ref={audioRef}
                 src={currentSong.audio}
+                onEnded={songEndHandler}
             ></audio>
         </div>
     )
